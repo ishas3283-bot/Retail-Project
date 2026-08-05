@@ -1,4 +1,4 @@
-,Transaction ID,Customer ID,Category,Item,Price Per Unit,Quantity,Total Spent,Payment Method,Location,Transaction Date,Discount Applied
+Transaction ID,Customer ID,Category,Item,Price Per Unit,Quantity,Total Spent,Payment Method,Location,Transaction Date,Discount Applied
 0,TXN_6867343,CUST_09,Patisserie,Item_10_PAT,18.5,10.0,185.0,Online/UPI,Online,2024-04-08,True
 1,TXN_3731986,CUST_22,Milk Products,Item_17_MILK,29.0,9.0,261.0,Online/UPI,Online,2023-07-23,True
 2,TXN_9303719,CUST_02,Butchers,Item_12_BUT,21.5,2.0,43.0,Debit/Credit,Online,2022-10-05,False
