@@ -1,0 +1,73 @@
+use store;
+-- minimum item sold from store (1)
+select item, category, sum(total_spent) as Sum_of_spent from cleaned_pandas_dataset
+group by item, category
+order by Sum_of_spent asc
+limit 1;
+-- max item sold from store (2)
+select item, category, sum(total_spent) as Sum_of_spent 
+from cleaned_pandas_dataset
+group by item, category
+order by Sum_of_spent desc
+limit 1;
+-- Which category have frequent purchasing? (3)
+select category, sum(Quantity) as Quantity_total
+from cleaned_pandas_dataset 
+group by category
+order by Quantity_total desc 
+limit 1; 
+-- Counts of Payment Method (4)
+select payment_method as `Payment Method`, count(payment_method) as `Number of method`
+from cleaned_pandas_dataset
+group by payment_method
+order by `Number of method` desc;
+-- how many items with catergory is applied for highest discount? (5)
+select category, count(discount_applied = True) as Number_of_discount
+from cleaned_pandas_dataset
+group by category
+order by Number_of_discount desc
+limit 1;
+-- List every detail of person who have category: furniture? (6)
+select transaction_id,total_spent,category,Location from cleaned_pandas_dataset
+group by transaction_id,category, total_spent,Location
+having category = 'furniture'; 
+-- Which top 10 customers have spent the most overall? (7)
+select customer_id, sum(total_spent) as spending
+from cleaned_pandas_dataset
+group by customer_id
+order by spending desc
+limit 10;
+-- identify customers whose total spending is above the average customer spending. (8)
+select customer_id, sum(total_spent) as spending, avg(total_spent) as average_spending
+from cleaned_pandas_dataset
+group by customer_id
+having spending > average_spending
+order by spending desc;
+-- Rank categories based on total revenue. (9)
+select Category, 
+sum(total_spent) as revenue,
+dense_rank() over(order by sum(total_spent) desc) as price 
+from cleaned_pandas_dataset
+group by Category;
+-- customer-level metrics such as total transactions, total quantity purchased, total spending, and average transaction value (!0)
+select count(transaction_id) as Total_Transactions, sum(Quantity) as `Total Quantity`, sum(total_spent) as `Total Spending`, avg(total_spent) as Average_Transaction_Value
+from cleaned_pandas_dataset;
+-- sort data according to the month IN 2022(11)
+SELECT transaction_id,customer_id,Category, transaction_date from cleaned_pandas_dataset
+order by year(transaction_date), date(transaction_date) and month(transaction_date);
+-- Which month drive lowest sales in the year 2022? (12)
+select month(transaction_date) as Month_revenue,year(transaction_date) as Year_p, sum(total_spent) as Sales
+from cleaned_pandas_dataset
+group by Month_revenue, Year_p
+order by Sales asc
+limit 1;
+-- Which month have maximum sales?(13)
+select month(transaction_date) as Month_revenue,year(transaction_date) as Year_p, sum(total_spent) as Sales
+from cleaned_pandas_dataset
+group by Month_revenue, Year_p
+order by Sales desc
+limit 1;
+-- Major Perference of location (14)
+select Location, count(Location)
+from cleaned_pandas_dataset
+group by Location;
